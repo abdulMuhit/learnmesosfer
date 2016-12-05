@@ -3,7 +3,7 @@ Hello,
 # learnmesosfer
 sample Ionic with mesosfer, CRUD operation
 
-This is some sample Crud using mesosfer as the backand, tested and works on chrome and android.
+This is some sample Crud using mesosfer as the backend, tested and works on chrome and android.
 
 you can see the mesosfer web here : https://mesosfer.com/ *Mobile BackEnd as a Service
 
