@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self'">-->
+    <title>learn mesosfer</title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+    <script src="lib/jquery.js"></script>
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/pwcheck.directives.js"></script>
+  </head>
+  <body ng-app="starter" ng-controller="mesosferCtrl">
+
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">Ionic Angular Starter, Mesosfer Sample SignIn and CRUD</h1>
+      </ion-header-bar>
+      <ion-content>
+<div ng-show="SignView">
+     <div class="form-group">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" placeholder="New User" ng-model="signUpMode">New User {{signUpMode}} / Signin Mode
+        </label>
+        
+      </div>
+  </div>
+  <div ng-show="signUpMode">
+       <form name="myForm" novalidate>
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">First Name</span>
+                <input name="firstname" id="firstname" type="text" placeholder="type First Name here" ng-model="person.name" required>
+                <div class="padding">
+                  <p ng-show="myForm.firstname.$error.required">* First Name is required</p>
+                </div>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Last Name</span>
+                <input name="lastname" id="lastname" type="text" placeholder="Last Name" ng-model="person.lastname">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Email</span>
+                <input id="email" name="email" type="email" placeholder="Email" ng-model="person.email" required>
+                <div class="padding">
+                <p ng-show="myForm.email.$error.required">* Email is not valid</p>
+                <p ng-show="myForm.email.$error.email">* Email is not valid</p>
+              </div>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Password</span>
+                <input name="pw1" id="pw1" type="password" placeholder="Password" ng-model="person.password" ng-minlength="5" required>
+                <div class="padding">
+            <p ng-show="myForm.pw1.$error.required">* Password is required</p>
+            <p ng-show="myForm.pw1.$error.minlength">* Password must be longer than 5 characters</p></div>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Re-type Password</span>
+                <input name="pw2" id="pw2" type="password" placeholder="Please Retype Your Password" ng-model="person.password2" ng-minlength="5" pw-check='pw1' required>
+                <div class="padding">
+                  <p ng-show="myForm.pw2.$error.required">* Retype Password is required</p>
+                  <p ng-show="myForm.pw2.$error.pwmatch">* Password don't match</p>
+                </div>
+            </label>
+        </div>
+        <div class="padding">
+            <button type="button" class="button button-block button-positive" ng-disabled="myForm.$invalid" ng-click="signUp(person)">Submit</button>
+        </div>
+    </form>
+</div>
+
+<div ng-show="!signUpMode">
+   <form name="thisform" id="thisform" novalidate>
+    <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Email</span>
+          <input id="email" name="email" type="email" placeholder="Email" ng-model="person.email" required>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Password</span>
+          <input id="password" name="password" type="password" placeholder="password" ng-model="person.password" required>
+        </label>
+    </div>
+    <div class="padding">
+      <button class="button button-full button-positive"  ng-disabled="thisform.$invalid" ng-click="signin(person)">Sign In</button>
+    </div>
+    </form>
+</div>
+</div>
+  
+<div ng-show="!SignView">
+  <div class="padding">Hello {{thisUserData.data.result.firstname}} {{thisUserData.data.result.lastname}}</div>
+  <div>
+  <button class="button button-full button-positive" ng-click="signOut()">Sign Out</button>
+  <form name="myForm3" novalidate>
+  <div class="list">
+    <label class="item item-input item-floating-label">
+      <span class="input-label">Data 1</span>
+        <input name="data1" type="text" placeholder="data1" ng-model="data.data1" required>
+    <div class="padding">
+      <p ng-show="myForm3.data1.$error.required">* Data1 is required</p>
+    </div>
+    </label>
+    <label class="item item-input item-floating-label">
+      <span class="input-label">First Col</span>
+        <input type="text" placeholder="Data firstCol" ng-model="data.firstCol">
+    </label>
+  </div>
+  <div class="padding">
+      <button class="button button-full button-positive"  ng-disabled="myForm3.$invalid" ng-click="submitData(data)">Submit Data</button>
+  </div>
+</form>
+  <ion-list can-swipe="true">
+    <ion-item ng-repeat="data in datas">
+    <ul>
+      <p>{{data.metadata.data1}}</p>
+      <span class="right">{{data.metadata.firstCol}}</span>
+    </ul>
+        <ion-option-button class="button-assertive icon ion-trash-a" ng-click="deleteData(data)"></ion-option-button>
+    </ion-item>
+</ion-list>
+</div>
+</div>
+      </ion-content>
+    </ion-pane>
+  </body>
+</html>
