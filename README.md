@@ -21,11 +21,14 @@ some point in this sample :
 how to use :
 
 1. signin to mesosfer web to get your appid and app key
-2. git clone https://github.com/abdulMuhit/learnmesosfer
-3. go to learnmesosfer directory
-4. change the appID and appKey with your appId and appKey
-5. type ionic serve
-6. enjoy
+2. create your own Project/App, choose the DATA type.
+3. create your own bucket, in my sample the name is Bucket1
+4. In that bucket(Bucket1), create new column, in my sample i create 2 column, column 1 = data1, and column2 = firstCol
+5. git clone https://github.com/abdulMuhit/learnmesosfer
+6. go to learnmesosfer directory
+7. change the appID and appKey with your appId and appKey
+8. type ionic serve
+9. enjoy
 
 * Ups, sorry, in this sample code, the update operation is not yet implemeted...
 * If there any comment or some better code than this, please also let me know.
